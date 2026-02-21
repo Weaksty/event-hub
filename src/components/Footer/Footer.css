@@ -1,0 +1,35 @@
+footer {
+  background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+  color: white;
+  padding: 60px 40px;
+  text-align: center;
+  border-top: 1px solid rgba(102, 126, 234, 0.3);
+  margin-top: 40px;
+}
+
+footer h1 {
+  margin: 0 0 30px 0;
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+footer p {
+  color: #b0b0b0;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 10px 0;
+}
+
+footer a {
+  color: #667eea;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #764ba2;
+}
