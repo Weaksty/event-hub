@@ -52,22 +52,25 @@ body, .article {
     padding: 18px 20px 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 3px;
 }
-
+.article-title {
+    font-size: 26px;
+    color: #000000;
+    margin-top: 0px;
+    font-family: 'Roboto', 'Inter', Arial, sans-serif;
+}
 .typeOfEvent {
     display: inline-flex;
     align-items: center;
     background: #e0e7ff;
     color: #3730a3;
-    padding: 10px 10px 10px 10px;
+    padding: 6px 6px 6px 6px;
     border-radius: 10px;
 }
 
 .article-date {
     color: #6b7280;
-    font-size: 0.98rem;
-    font-weight: 500;
     margin-right: 12px;
     font-family: 'Roboto', 'Inter', Arial, sans-serif;
 }
@@ -79,21 +82,19 @@ body, .article {
 .nowPeople {
     color: #10b981;
     margin-right: 16px;
-    font-weight: 700;
     font-size: 1.13rem;
-    letter-spacing: 0.02em;
+    
 }
 
 .location {
     color: #6366f1;
-    font-weight: 600;
     font-size: 1.04rem;
 }
 
 .article-info-row {
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 1px;
     margin-top: 6px;
     margin-bottom: 2px;
 }
@@ -132,12 +133,11 @@ body, .article {
     border-radius: 8px;
     cursor: pointer;
     font-size: 15px;
-    font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
 }
 .article-button:hover {
     background-color: #764ba2;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
 }

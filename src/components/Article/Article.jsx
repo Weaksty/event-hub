@@ -14,7 +14,7 @@ function Article() {
                         </svg>
                         Marafon
                 </span>
-
+                <h2 className="article-title">Ottawa Marathon 2024 Ottawa Marathon 2024</h2>
                 <div className="article-info-row">
                     <span className="article-date">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
