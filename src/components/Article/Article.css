@@ -67,15 +67,16 @@ body, .article {
     color: #3730a3;
     padding: 6px 6px 6px 6px;
     border-radius: 10px;
+    font-size: 20px;
 }
 
 .article-date {
-    color: #6b7280;
+    color: #000000;
     margin-right: 12px;
     font-family: 'Roboto', 'Inter', Arial, sans-serif;
 }
 .article-deadline {
-    color: red;
+    color: rgb(255, 0, 0);
     font-family: 'Roboto', 'Inter', Arial, sans-serif;
 }
 

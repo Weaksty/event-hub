@@ -73,7 +73,7 @@ aside h2 {
   border-bottom: none;
 }
 
-.bthRegion {
+.bthRegion, .bthDates, .bthAttendance, .bthEvent {
   background: none;
   border: none;
   cursor: pointer;
@@ -85,17 +85,17 @@ aside h2 {
   border-radius: 6px;
 }
 
-.bthRegion:hover {
+.bthRegion:hover, .bthDates:hover, .bthAttendance:hover, .bthEvent:hover {
   background-color: #f0f2ff;
 }
 
-.bthRegion svg {
+.bthRegion svg, .bthDates svg, .bthAttendance svg, .bthEvent svg {
   transition: transform 0.3s ease;
 }
 
-.bthRegion:hover svg {
+/* .bthRegion:hover svg {
   transform: rotate(180deg);
-}
+} */
 
 .conteiner {
   width: 85%;

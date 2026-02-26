@@ -1,4 +1,5 @@
 иконки взяты из https://heroicons.com/outline
 
 Как запустить сервер?
+зайти в консоль ввести:
 npm run dev
