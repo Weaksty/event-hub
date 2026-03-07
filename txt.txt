@@ -1,5 +1,7 @@
 иконки взяты из https://heroicons.com/outline
 
+календань для Dates взять от сюда => DatePicker https://www.npmjs.com/package/react-datepicker:
+
 Как запустить сервер?
 зайти в консоль ввести:
 npm run dev

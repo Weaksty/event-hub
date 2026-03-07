@@ -26,7 +26,7 @@ function Footer(){
       <li className="menu__item"><a className="menu__link" href="#">Contact</a></li>
 
     </ul>
-    <p>&copy;2025 Weaksty | All Rights Reserved</p>
+    <p>&copy;2026 Weaksty | All Rights Reserved</p>
   </footer>
     )
 }

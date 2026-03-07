@@ -4,8 +4,8 @@ import Article from "./Article";
 export default function GetEventsList() {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-    async function test() {
-      const  { data, error } = await supabase.from("events_list").select("*").limit(20);
+    async function getSupaBaseList() {
+      const  { data, error } = await supabase.from("events_list").select("*").limit(18);
       if (data) {
         console.log("DATA:", data);
         setEvents(data);
@@ -13,7 +13,7 @@ export default function GetEventsList() {
         console.error("ERROR:", error);
       }
     }
-    test();
+    getSupaBaseList();
   }, []);
   return (
     <div className="conteiner">
