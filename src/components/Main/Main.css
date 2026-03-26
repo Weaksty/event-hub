@@ -184,3 +184,15 @@ aside h2 {
   cursor: pointer;
   margin-top: 8px;
 }
+.attendanceDiv-button:hover{
+  background-color: #5a67d8;
+}
+.attendanceDiv-button:active{
+  background-color: #4c51bf;
+}
+.attendanceDiv-button:hover{
+  background-color: #5a67d8;
+}
+.attendanceDiv-button:active{
+  background-color: #4c51bf;
+}

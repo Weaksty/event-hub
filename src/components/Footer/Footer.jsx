@@ -1,21 +1,24 @@
 import React from 'react'
 import './Footer.css'
-
+import facebook from '../../assets/face.png'
+import telegram from '../../assets/tg.png'
+import Instagram from '../../assets/insta.png'
+import twitter from '../../assets/twitterx.png'
 function Footer(){
     return(
-        <footer className="footer">
+<footer className="footer">
     <ul className="social-icon">
       <li className="social-icon__item"><a className="social-icon__link" href="#">
-          <ion-icon name="logo-facebook"></ion-icon>
+          <img  src={facebook}></img>
         </a></li>
       <li className="social-icon__item"><a className="social-icon__link" href="#">
-          <ion-icon name="logo-twitter"></ion-icon>
+          <img  src={telegram}></img>
         </a></li>
       <li className="social-icon__item"><a className="social-icon__link" href="#">
-          <ion-icon name="logo-linkedin"></ion-icon>
+          <img  src={Instagram}></img>
         </a></li>
       <li className="social-icon__item"><a className="social-icon__link" href="#">
-          <ion-icon name="logo-instagram"></ion-icon>
+          <img  src={twitter}></img>
         </a></li>
     </ul>
     <ul className="menu">
@@ -26,7 +29,8 @@ function Footer(){
       <li className="menu__item"><a className="menu__link" href="#">Contact</a></li>
 
     </ul>
-    <p>&copy;2026 Weaksty | All Rights Reserved</p>
+    <p>&copy;2021 Nadine Coelho | All Rights Reserved</p>
+    
   </footer>
     )
 }

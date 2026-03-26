@@ -3,14 +3,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './DatePicker.css';
 
-const Example = () => {
-  const [startDate, setStartDate] = useState(null);
-
+const Example = ({date, setDate}) => {
   return (
     <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      dateFormat="dd/MM/yyyy"
+      selected={date}
+      onChange={(d) => setDate(d)}
+      dateFormat="yyyy-MM-dd"
       className="myInput"
       placeholderText="From"
       isClearable

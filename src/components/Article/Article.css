@@ -26,6 +26,7 @@ body, .article {
 }
 .article:hover {
     box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 3px 8px 0 rgba(0,0,0,0.12);
+    transform: scale(1.05);
 }
 
 .imgContainer {
@@ -43,10 +44,6 @@ body, .article {
     object-fit: cover;
     transition: transform 0.3s;
 }
-.article:hover .article-image {
-    transform: scale(1.05);
-}
-
 .article-content {
     width: 100%;
     padding: 18px 20px 16px 20px;
@@ -138,7 +135,9 @@ body, .article {
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
 }
 .article-button:hover {
-    background-color: #764ba2;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+}
+.article-button:active{
+  background-color: #4c51bf;
 }

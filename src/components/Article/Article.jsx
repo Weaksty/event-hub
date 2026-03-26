@@ -1,7 +1,7 @@
 import './Article.css'
 import React from 'react'
 
-function Article(events){
+export default function Article(events){
     return (
         <article className="article">
             <div className="imgContainer">
@@ -52,4 +52,3 @@ function Article(events){
         </article>
     );
 }
-export default Article
