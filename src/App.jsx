@@ -1,16 +1,19 @@
 import React from 'react'
 import './App.css'
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
-import Main from './components/Main/Main'
+import Home from './pages/Home.jsx'
+import Events from './pages/Events.jsx'
+import Login from './pages/Login.jsx'
+import Register from './pages/Register.jsx'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <>
-      <Header></Header>
-      <Main></Main>
-      <Footer></Footer>
-    </>
+    <Routes>
+      <Route path='/login' element={<Login/>}/>
+      <Route path='/register' element={<Register/>}/>
+      <Route path='/events' element={<Events/>}/>
+      <Route path='/' element={<Home/>}/>
+    </Routes>
   )
 }
 

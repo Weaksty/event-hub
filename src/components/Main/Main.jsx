@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './Main.css'
 import Example from "./DatePicker";
 import ExampleTo from "./DataPickerTo";
 import { useState } from "react";
 import GetEventsList from '../Article/GetEventsList';
 import { useMemo } from "react";
+import { BsFillGridFill } from "react-icons/bs";
+import { FaListUl } from "react-icons/fa6";
+
 
 function Main(){
+        const [view, setView] = useState("grid");
         const [sortBy, setSortBy] = useState("")
         const [regeonFilter, setRegeonFilter] = useState([])
         const [dateTo, setDateTo] = useState(null)
         const [date, setDate] = useState(null)
         const [attendanceFilter, setAttendanceFilter] = useState([])
-        const [eventTypeFilter, setEventTypeFilter] = useState([])
+        const [category, setcategory] = useState([])
         const [toggleR, setToggleRegion] = useState(false);
         const [toggleD, setToggleDates] = useState(false);
         const [toggleA, setToggleAttendance] = useState(false);
@@ -37,13 +41,13 @@ function Main(){
                 setAttendanceFilter(prev => prev.filter(e => e !== value ))
             }
         }
-        function eventTypeFilterFunction(e){
+        function categoryFunction(e){
             const value = e.target.value
             const checked = e.target.checked
             if(checked){
-                setEventTypeFilter(prev => [...prev,value])
+                setcategory(prev => [...prev,value])
             } else {
-                setEventTypeFilter(prev => prev.filter(e => e !== value))
+                setcategory(prev => prev.filter(e => e !== value))
             }
         } 
 
@@ -59,14 +63,14 @@ function Main(){
             region:regeonFilter,
             date: formatDateForDB(date),
             dateTo:formatDateForDB(dateTo),
-            attendanceFilter,
-            eventTypeFilter
+            attendance:attendanceFilter,
+            category
             }
-        },[sortBy,regeonFilter,date,dateTo,attendanceFilter,eventTypeFilter])
-        console.log(filters)
-        console.log(regeonFilter)
+        },[sortBy,regeonFilter,date,dateTo,attendanceFilter,category])
     return(
+        <div className='conteinerMain'>
         <main>
+            
             
 <aside className='aside'>
 
@@ -151,16 +155,16 @@ function Main(){
 
 
                 <div className='bthAttendanceDiv'>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`} ><input className="attendanceDiv-checkbox" type="checkbox" id="Under-500" value={'500'} onChange={attendanceFilterFunction}/><label htmlFor="Under-500">Under 500</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range500-1000" value={'500-1000'} onChange={attendanceFilterFunction}/><label htmlFor="range500-1000">500-1000</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range1000-2000" value={'1000-2000'} onChange={attendanceFilterFunction}/><label htmlFor="range1000-2000">1000-2000</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range2000-5000" value={'2000-5000'} onChange={attendanceFilterFunction}/><label htmlFor="range2000-5000">2000-5000</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range5000-7500" value={'5000-7500'} onChange={attendanceFilterFunction}/><label htmlFor="range5000-7500">5000-7500</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range7500-10000" value={'7500-10000'} onChange={attendanceFilterFunction}/><label htmlFor="range7500-10000">7500-10000</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range10000-20000" value={'10000-20000'} onChange={attendanceFilterFunction}/><label htmlFor="range10000-20000">10000-20000</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range20000-50000"  value={'20000-50000'}onChange={attendanceFilterFunction}/><label htmlFor="range20000-50000">20000-50000</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range50000-100000" value={'50000-100000'} onChange={attendanceFilterFunction}/><label htmlFor="range50000-100000">50000-100000</label></div>
-                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="over100000" value={'100000'} onChange={attendanceFilterFunction}/><label htmlFor="over100000">Over 100000</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`} ><input className="attendanceDiv-checkbox" type="checkbox" id="500-" value={'500-'} onChange={attendanceFilterFunction}/><label htmlFor="500-">Under 500</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range500-1000" value={'500-999'} onChange={attendanceFilterFunction}/><label htmlFor="range500-1000">500-999</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range1000-2000" value={'1000-1999'} onChange={attendanceFilterFunction}/><label htmlFor="range1000-2000">1000-1999</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range2000-5000" value={'2000-4999'} onChange={attendanceFilterFunction}/><label htmlFor="range2000-4999">2000-4999</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range5000-7499" value={'5000-7499'} onChange={attendanceFilterFunction}/><label htmlFor="range5000-7499">5000-7499</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range7500-9999" value={'7500-9999'} onChange={attendanceFilterFunction}/><label htmlFor="range7500-9999">7500-9999</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range10000-20000" value={'10000-19999'} onChange={attendanceFilterFunction}/><label htmlFor="range10000-19999">10000-19999</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range20000-50000"  value={'20000-49999'}onChange={attendanceFilterFunction}/><label htmlFor="range20000-50000">20000-49999</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="range50000-99999" value={'50000-99999'} onChange={attendanceFilterFunction}/><label htmlFor="range50000-99999">50000-99999</label></div>
+                    <div className={`attendanceDiv ${toggleA ? 'enabled' : 'disabled'}`}><input className="attendanceDiv-checkbox" type="checkbox" id="over100000" value={'100000+'} onChange={attendanceFilterFunction}/><label htmlFor="over100000">Over 100000</label></div>
                 </div>
                 </div>
 
@@ -173,45 +177,83 @@ function Main(){
                         </button>
                     </div>
                 <div className='bthEventDiv'>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`} ><input className="eventtype-checkbox" type="checkbox" id="air-show" value={'air-show'} onChange={eventTypeFilterFunction}/><label htmlFor="air-show">Air Show</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="animal" value={'animal'} onChange={eventTypeFilterFunction}/><label htmlFor="animal">Animal</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="arts-festival" value={'arts-festival'} onChange={eventTypeFilterFunction}/><label htmlFor="arts-festival">Arts Festival</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="arts-crafts" value={'arts-crafts'} onChange={eventTypeFilterFunction}/><label htmlFor="arts-crafts">Arts and Crafts</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="auto-show" value={'auto-show'} onChange={eventTypeFilterFunction}/><label htmlFor="auto-show">Auto Show</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="beer/wine" value={'beer/wine'} onChange={eventTypeFilterFunction}/><label htmlFor="beer/wine">Beer/Wine</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="business" value={'business'} onChange={eventTypeFilterFunction}/><label htmlFor="business">Business</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="boat-show" value={'boat-show'} onChange={eventTypeFilterFunction}/><label htmlFor="boat-show">Boat Show</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="celebrity-event" value={'celebrity-event'} onChange={eventTypeFilterFunction}/><label htmlFor="celebrity-event">Celebrity Event</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="charity" value={'charity'} onChange={eventTypeFilterFunction}/><label htmlFor="charity">Charity</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="cultural" value={'cultural'} onChange={eventTypeFilterFunction}/><label htmlFor="cultural">Cultural</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="education" value={'education'} onChange={eventTypeFilterFunction}/><label htmlFor="education">Education</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="farmers" value={'farmers'} onChange={eventTypeFilterFunction}/><label htmlFor="farmers">Farmers</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="market" value={'market'} onChange={eventTypeFilterFunction}/><label htmlFor="market">Market</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="food" value={'food'} onChange={eventTypeFilterFunction}/><label htmlFor="food">Food</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="general" value={'general'} onChange={eventTypeFilterFunction}/><label htmlFor="general">General</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="fair" value={'fair'} onChange={eventTypeFilterFunction}/><label htmlFor="fair">Fair</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="home-and-garden-show" value={'home-and-garden-show'} onChange={eventTypeFilterFunction}/><label htmlFor="home-and-garden-show">Home and Garden Show</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="lifestyle-intercept" value={'lifestyle-intercept'} onChange={eventTypeFilterFunction}/><label htmlFor="lifestyle-intercept">Lifestyle Intercept</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="motorstyle-show" value={'motorstyle-show'} onChange={eventTypeFilterFunction}/><label htmlFor="motorstyle-show">Motorstyle Show</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="motorsport" value={'motorsport'} onChange={eventTypeFilterFunction}/><label htmlFor="motorsport">Motorsport</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="music" value={'music'} onChange={eventTypeFilterFunction}/><label htmlFor="music">Music</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="pride" value={'pride'} onChange={eventTypeFilterFunction}/><label htmlFor="pride">Pride</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="parade" value={'parade'} onChange={eventTypeFilterFunction}/><label htmlFor="parade">Parade</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="party" value={'party'} onChange={eventTypeFilterFunction}/><label htmlFor="party">Party</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="seasonal" value={'seasonal'} onChange={eventTypeFilterFunction}/><label htmlFor="seasonal">Seasonal</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="sporting" value={'sporting'} onChange={eventTypeFilterFunction}/><label htmlFor="sporting">Sporting</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="street-festival" value={'street-festival'} onChange={eventTypeFilterFunction}/><label htmlFor="street-festival">Street Festival</label></div>
-                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="trade-show" value={'trade-show'} onChange={eventTypeFilterFunction}/><label htmlFor="trade-show">Trade Show</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`} ><input className="eventtype-checkbox" type="checkbox" id="air-show" value={'air-show'} onChange={categoryFunction}/><label htmlFor="air-show">Air Show</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="animal" value={'animal'} onChange={categoryFunction}/><label htmlFor="animal">Animal</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="arts-festival" value={'arts-festival'} onChange={categoryFunction}/><label htmlFor="arts-festival">Arts Festival</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="arts-crafts" value={'arts-crafts'} onChange={categoryFunction}/><label htmlFor="arts-crafts">Arts and Crafts</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="auto-show" value={'auto-show'} onChange={categoryFunction}/><label htmlFor="auto-show">Auto Show</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="beer/wine" value={'beer/wine'} onChange={categoryFunction}/><label htmlFor="beer/wine">Beer/Wine</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="business" value={'business'} onChange={categoryFunction}/><label htmlFor="business">Business</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="boat-show" value={'boat-show'} onChange={categoryFunction}/><label htmlFor="boat-show">Boat Show</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="celebrity-event" value={'celebrity-event'} onChange={categoryFunction}/><label htmlFor="celebrity-event">Celebrity Event</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="charity" value={'charity'} onChange={categoryFunction}/><label htmlFor="charity">Charity</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="cultural" value={'cultural'} onChange={categoryFunction}/><label htmlFor="cultural">Cultural</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="education" value={'education'} onChange={categoryFunction}/><label htmlFor="education">Education</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="farmers" value={'farmers'} onChange={categoryFunction}/><label htmlFor="farmers">Farmers</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="market" value={'market'} onChange={categoryFunction}/><label htmlFor="market">Market</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="food" value={'food'} onChange={categoryFunction}/><label htmlFor="food">Food</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="general" value={'general'} onChange={categoryFunction}/><label htmlFor="general">General</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="fair" value={'fair'} onChange={categoryFunction}/><label htmlFor="fair">Fair</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="home-and-garden-show" value={'home-and-garden-show'} onChange={categoryFunction}/><label htmlFor="home-and-garden-show">Home and Garden Show</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="lifestyle-intercept" value={'lifestyle-intercept'} onChange={categoryFunction}/><label htmlFor="lifestyle-intercept">Lifestyle Intercept</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="motorstyle-show" value={'motorstyle-show'} onChange={categoryFunction}/><label htmlFor="motorstyle-show">Motorstyle Show</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="motorsport" value={'motorsport'} onChange={categoryFunction}/><label htmlFor="motorsport">Motorsport</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="music" value={'music'} onChange={categoryFunction}/><label htmlFor="music">Music</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="pride" value={'pride'} onChange={categoryFunction}/><label htmlFor="pride">Pride</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="parade" value={'parade'} onChange={categoryFunction}/><label htmlFor="parade">Parade</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="party" value={'party'} onChange={categoryFunction}/><label htmlFor="party">Party</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="seasonal" value={'seasonal'} onChange={categoryFunction}/><label htmlFor="seasonal">Seasonal</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="sporting" value={'sporting'} onChange={categoryFunction}/><label htmlFor="sporting">Sporting</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="street-festival" value={'street-festival'} onChange={categoryFunction}/><label htmlFor="street-festival">Street Festival</label></div>
+                    <div className={`eventDiv ${toggleE ? 'enabled' : 'disabled'}`}><input className="eventtype-checkbox" type="checkbox" id="trade-show" value={'trade-show'} onChange={categoryFunction}/><label htmlFor="trade-show">Trade Show</label></div>
                     
                 </div>
                 </div>
             </aside>
-              <GetEventsList
-               filters={filters}
-               />       
+
+            
+            <div className='conteinerEventLits'>
+                <div>
+                    <div>
+                      
+                    </div>
+                </div>
+
+                <div className='conteinerResult'>
+                    <div className='conteinerResults'>
+                        <h2>Results</h2>
+                    <div className="viewSwitch">
+                        <button
+                            onClick={() => setView("grid")}
+                            className={view==="grid" ? "switchBtn active" : "switchBtn"}
+                        >
+                            <BsFillGridFill size={16}/>
+                        </button>
+
+                        <button
+                            onClick={() => setView("list")}
+                            className={view==="list" ? "switchBtn active" : "switchBtn"}
+                        >
+                            <FaListUl size={16}/>
+                        </button>
+
+                            <div
+                                className={`slider ${view === "list" ? "move" : ""}`}
+                            />
+
+                </div>
+                </div>
+                    
+                    <div className={view === "grid" ? "conteiner grid" : "conteiner list"}>
+                        <GetEventsList filters={filters} view={view}/>
+                    </div>
+               </div> 
+               </div>  
+           
               
             
         </main>
+        </div>
     )
 }
 
