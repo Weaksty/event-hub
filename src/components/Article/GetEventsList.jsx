@@ -1,30 +1,31 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { supabase } from "./supabaseClient";
+import { publicSupabase } from "./supabaseClient";
 import Article from "./Article";
 import "./Article.css";
+
+const attendanceRanges = {
+  "500-": { min: 0, max: 499 },
+  "500-999": { min: 500, max: 999 },
+  "1000-1999": { min: 1000, max: 1999 },
+  "2000-4999": { min: 2000, max: 4999 },
+  "5000-7499": { min: 5000, max: 7499 },
+  "7500-9999": { min: 7500, max: 9999 },
+  "10000-19999": { min: 10000, max: 19999 },
+  "20000-49999": { min: 20000, max: 49999 },
+  "50000-99999": { min: 50000, max: 99999 },
+  "100000+": { min: 100000, max: Infinity },
+};
 
 export default function GetEventsList({ filters, view }) {
   const [allEvents, setAllEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const attendanceRanges = {
-    "500-": { min: 0, max: 499 },
-    "500-999": { min: 500, max: 999 },
-    "1000-1999": { min: 1000, max: 1999 },
-    "2000-4999": { min: 2000, max: 4999 },
-    "5000-7499": { min: 5000, max: 7499 },
-    "7500-9999": { min: 7500, max: 9999 },
-    "10000-19999": { min: 10000, max: 19999 },
-    "20000-49999": { min: 20000, max: 49999 },
-    "50000-99999": { min: 50000, max: 99999 },
-    "100000+": { min: 100000, max: Infinity },
-  };
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
     async function getSupaBaseList() {
       setLoading(true);
 
-      const { data, error } = await supabase
+      const { data, error } = await publicSupabase
         .from("events_list")
         .select(
           `
@@ -38,9 +39,14 @@ export default function GetEventsList({ filters, view }) {
         .limit(21);
 
       if (error) {
-        console.error("ERROR:", error);
+        console.error("Events load error:", error);
+        setLoadError(error.message);
+        setAllEvents([]);
+        setLoading(false);
+        return;
       }
 
+      setLoadError("");
       setAllEvents(data ?? []);
       setLoading(false);
     }
@@ -79,8 +85,6 @@ export default function GetEventsList({ filters, view }) {
     });
 
     switch (filters.sortBy) {
-      case "Date":
-        return result.sort((a, b) => a.event_date.localeCompare(b.event_date));
       case "DeadlineSoonestFirst":
         return result.sort((a, b) => a.deadline.localeCompare(b.deadline));
       case "three":
@@ -123,31 +127,58 @@ export default function GetEventsList({ filters, view }) {
   }
 
   function formatAttendance(value) {
-    if (value === null || value === undefined) return "Attendance TBD";
-    return `${new Intl.NumberFormat("en-US").format(value)}+`;
+  if (value == null) return "Attendance TBD";
+
+  if (typeof value !== "number" || Number.isNaN(value)) {
+    return "Invalid attendance";
   }
 
-  function getEventImage(event) {
-    if (event.image_url) return event.image_url;
+  const formatted = new Intl.NumberFormat(undefined).format(value);
 
-    if (event.event_images?.length) {
-      const sortedImages = [...event.event_images].sort(
-        (a, b) => (a.order_index ?? 0) - (b.order_index ?? 0)
-      );
+  return value > 0 ? `${formatted}+` : formatted;
+}
 
-      return sortedImages[0]?.url ?? "";
-    }
-
-    return "";
+function getEventImage(event) {
+  if (event.image_url) {
+    return event.image_url;
   }
+
+  if (!event.event_images?.length) {
+    return null;
+  }
+
+  const sortedImages = [...event.event_images].sort(
+    (a, b) => (a.order_index ?? 0) - (b.order_index ?? 0)
+  );
+
+  return sortedImages[0]?.url ?? null;
+}
 
   if (loading) {
     return <p>loading...</p>;
   }
 
-  if (filteredEvents.length === 0) {
-    return <p>No events found for the selected filters.</p>;
+  if (loadError) {
+    return <p>Could not load events: {loadError}</p>;
   }
+
+  if (filteredEvents.length === 0) {
+    const hasActiveFilters =
+      filters?.category?.length ||
+      filters?.region?.length ||
+      filters?.attendance?.length ||
+      filters?.date ||
+      filters?.dateTo;
+
+    return (
+      <p>
+        {hasActiveFilters
+          ? "No events found for the selected filters."
+          : "No events available yet."}
+      </p>
+    );
+  }
+
 
   return (
     <>

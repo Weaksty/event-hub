@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+.profile-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef4fb 52%, #edf0ff 100%);
+  color: #17213b;
+  font-family: "Inter", sans-serif;
+}
+
+.profile-main {
+  min-height: 560px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 72px 22px;
+  display: grid;
+  place-items: center;
+}
+
+.profile-card {
+  width: min(100%, 520px);
+  padding: 44px 32px;
+  border-radius: 28px;
+  border: 1px solid rgba(214, 222, 238, 0.95);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 70px rgba(32, 44, 86, 0.12);
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 168px;
+  height: 168px;
+  margin: 0 auto 26px;
+  border-radius: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #1b2340 0%, #5966ff 58%, #24c5ad 100%);
+  font-size: 3.5rem;
+  font-weight: 900;
+  box-shadow: 0 20px 44px rgba(83, 96, 255, 0.24);
+}
+
+.profile-card h1 {
+  margin-bottom: 10px;
+  color: #111827;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+  font-weight: 900;
+}
+
+.profile-card p {
+  color: #66728d;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.profile-logout,
+.profile-login-link {
+  min-height: 46px;
+  margin-top: 28px;
+  padding: 0 18px;
+  border-radius: 15px;
+  border: 1px solid #dce3f0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #24304f;
+  background: #ffffff;
+  text-decoration: none;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-logout:hover,
+.profile-login-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
+}
+
+.profile-logout svg {
+  width: 20px;
+  height: 20px;
+}
+
+.profile-empty-icon {
+  width: 92px;
+  height: 92px;
+  margin-bottom: 18px;
+  color: #5966ff;
+}
+
+.profile-loading {
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  color: #5f6c89;
+  font-weight: 800;
+}
+
+@media (max-width: 640px) {
+  .profile-main {
+    padding: 42px 14px;
+  }
+
+  .profile-card {
+    padding: 34px 22px;
+    border-radius: 22px;
+  }
+
+  .profile-avatar {
+    width: 132px;
+    height: 132px;
+    border-radius: 28px;
+    font-size: 2.7rem;
+  }
+}

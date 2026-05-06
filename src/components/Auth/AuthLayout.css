@@ -49,7 +49,6 @@
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 30px 90px rgba(32, 44, 86, 0.14);
   background: rgba(255, 255, 255, 0.56);
-  backdrop-filter: blur(16px);
 }
 
 .auth-hero {
@@ -160,7 +159,6 @@
   padding: 22px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
 }
 
 .auth-stat-card {
@@ -342,6 +340,13 @@
 .auth-submit:hover {
   transform: translateY(-2px);
   box-shadow: 0 22px 38px rgba(83, 91, 255, 0.34);
+}
+
+.auth-submit:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+  box-shadow: none;
 }
 
 .auth-submit svg {

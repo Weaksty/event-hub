@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { supabase } from "../Article/supabaseClient";
 
 const navItems = [
   { label: "Home", to: "/" },
@@ -13,6 +14,34 @@ const navItems = [
 ];
 
 export default function Header() {
+  const location = useLocation();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadUser() {
+      const { data } = await supabase.auth.getSession();
+      if (!isActive) return;
+      setUser(data.session?.user ?? null);
+    }
+
+    loadUser();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => {
+      isActive = false;
+      listener.subscription.unsubscribe();
+    };
+  }, [location.pathname]);
+
+
+
   return (
     <header className="header">
       <div className="container header-shell">
@@ -39,16 +68,25 @@ export default function Header() {
             )
           )}
         </nav>
+        {user ? (
+          <div className="bth">
+            <Link to="/profile" className="bth bthProf">
+              Profile
+            </Link>
 
-        <div className="bth">
-          <Link to="/register" className="bthLog">
-            Register
-          </Link>
-          <Link to="/login" className="bthReg">
-            Login
-          </Link>
-        </div>
+          </div>
+        ) : (
+          <div className="bth">
+            <Link to="/register" className="bthLog">
+              Register
+            </Link>
+            <Link to="/login" className="bthReg">
+              Login
+            </Link>
+          </div>
+        )}
       </div>
+
     </header>
   );
 }

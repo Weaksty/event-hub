@@ -1,6 +1,6 @@
 /* ================= LAYOUT ================= */
 
-main{
+.events-main{
  display:flex;
  justify-content:space-between;
  gap:24px;
@@ -27,7 +27,7 @@ main{
 
 /* ================= SIDEBAR ================= */
 
-aside{
+.events-main .aside{
  width:15%;
  background:rgba(255,255,255,.92);
  padding:30px;
@@ -37,7 +37,7 @@ aside{
  box-shadow:0 18px 40px rgba(15,23,42,.08);
 }
 
-aside h1{
+.events-main .aside h1{
  font-size:22px;
  font-weight:700;
  margin-bottom:25px;
@@ -45,7 +45,7 @@ aside h1{
  border-bottom:2px solid #667eea;
 }
 
-aside h2{
+.events-main .aside h2{
  font-size:14px;
  font-weight:600;
  text-transform:uppercase;
@@ -314,18 +314,18 @@ aside h2{
 }
 
 @media (max-width: 1160px){
- main{
+ .events-main{
   flex-direction:column;
  }
 
- aside,
+ .events-main .aside,
  .conteinerEventLits{
   width:100%;
  }
 }
 
 @media (max-width: 720px){
- main{
+ .events-main{
   padding:16px;
  }
 

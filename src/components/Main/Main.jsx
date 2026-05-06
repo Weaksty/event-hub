@@ -69,7 +69,7 @@ function Main(){
         },[sortBy,regeonFilter,date,dateTo,attendanceFilter,category])
     return(
         <div className='conteinerMain'>
-        <main>
+        <main className='events-main'>
             
             
 <aside className='aside'>
@@ -77,8 +77,7 @@ function Main(){
     <h1>FILTERS</h1>
     <h2>Sort by</h2>
         <select name="one" id="select" onChange={(e) => setSortBy(e.target.value)}>
-            <option value="Date" >Date</option>
-            <option value="DeadlineSoonestFirst">Deadline: soonest first</option>
+            <option value="DeadlineSoonestFirst" >Deadline: soonest first</option>
             <option value="three">Deadline: latest first</option>
             <option value="four">Event Name: A - Z</option>
             <option value="five">Event Name: Z - A</option>

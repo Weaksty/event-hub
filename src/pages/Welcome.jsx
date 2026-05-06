@@ -181,7 +181,7 @@ export default function Welcome() {
             <div className="welcome-section-content">
               <span className="welcome-section-eyebrow">{eyebrow}</span>
               <div className="welcome-section-icon">
-                <Icon />
+                {React.createElement(Icon)}
               </div>
               <h2>{title}</h2>
               <p>{text}</p>

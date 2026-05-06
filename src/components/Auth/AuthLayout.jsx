@@ -12,6 +12,8 @@ import {
 } from "react-icons/hi2";
 import "./AuthLayout.css";
 import { IoArrowBack } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
+import { FaApple } from "react-icons/fa";
 
 const iconMap = {
   email: HiOutlineEnvelope,
@@ -28,8 +30,12 @@ export default function AuthLayout({
   altLink,
   altLinkText,
   fields,
+  onSubmit,
+  isSubmitting = false,
 }) {
-  const isRegister = mode === "register";
+
+const isRegister = mode === "register";
+
 
   return (
     <section className="auth-page">
@@ -85,7 +91,13 @@ export default function AuthLayout({
             <p>{subtitle}</p>
           </div>
 
-          <form className="auth-form">
+          <form
+            className="auth-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit?.();
+            }}
+          >
             {fields.map((field) => {
               const Icon = iconMap[field.icon];
 
@@ -98,6 +110,11 @@ export default function AuthLayout({
                       type={field.type}
                       name={field.name}
                       placeholder={field.placeholder}
+                      value={field.value}
+                      onChange={field.onChange}
+                      minLength={field.minLength}
+                      required={field.required}
+                      autoComplete={field.autoComplete}
                     />
                   </div>
                 </label>
@@ -121,10 +138,12 @@ export default function AuthLayout({
               )}
             </div>
 
-            <button type="submit" className="auth-submit">
+            <button type="submit" className="auth-submit" disabled={isSubmitting}>
               <span>{submitLabel}</span>
               <HiOutlineArrowLongRight />
             </button>
+            
+
           </form>
 
           <div className="auth-divider">
@@ -133,9 +152,12 @@ export default function AuthLayout({
 
           <div className="auth-socials">
             <button type="button" className="auth-social-button">
+              <FcGoogle />
               Google
+              
             </button>
             <button type="button" className="auth-social-button">
+              <FaApple />
               Apple
             </button>
           </div>

@@ -97,26 +97,30 @@
   gap: 12px;
   align-items: center;
 }
-
+.bthProf,
 .bthLog,
 .bthReg {
   min-height: 48px;
   padding: 0 20px;
   border-radius: 16px;
+  border: 0;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
   font-weight: 700;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
-
+.bthProf,
 .bthLog {
   color: #4f5b7d;
   background: rgba(245, 247, 252, 0.95);
   border: 1px solid rgba(220, 227, 239, 0.95);
 }
-
+.bthProf,
 .bthLog:hover {
   transform: translateY(-2px);
   background: #ffffff;
