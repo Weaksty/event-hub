@@ -48,6 +48,7 @@ export default function GetEventsList({ filters, view }) {
 
       setLoadError("");
       setAllEvents(data ?? []);
+      setAllEvents((result) => result.sort((a, b) => a.deadline.localeCompare(b.deadline)));
       setLoading(false);
     }
 
@@ -127,32 +128,32 @@ export default function GetEventsList({ filters, view }) {
   }
 
   function formatAttendance(value) {
-  if (value == null) return "Attendance TBD";
+    if (value == null) return "Attendance TBD";
 
-  if (typeof value !== "number" || Number.isNaN(value)) {
-    return "Invalid attendance";
+    if (typeof value !== "number" || Number.isNaN(value)) {
+      return "Invalid attendance";
+    }
+
+    const formatted = new Intl.NumberFormat(undefined).format(value);
+
+    return value > 0 ? `${formatted}+` : formatted;
   }
 
-  const formatted = new Intl.NumberFormat(undefined).format(value);
+  function getEventImage(event) {
+    if (event.image_url) {
+      return event.image_url;
+    }
 
-  return value > 0 ? `${formatted}+` : formatted;
-}
+    if (!event.event_images?.length) {
+      return null;
+    }
 
-function getEventImage(event) {
-  if (event.image_url) {
-    return event.image_url;
+    const sortedImages = [...event.event_images].sort(
+      (a, b) => (a.order_index ?? 0) - (b.order_index ?? 0)
+    );
+
+    return sortedImages[0]?.url ?? null;
   }
-
-  if (!event.event_images?.length) {
-    return null;
-  }
-
-  const sortedImages = [...event.event_images].sort(
-    (a, b) => (a.order_index ?? 0) - (b.order_index ?? 0)
-  );
-
-  return sortedImages[0]?.url ?? null;
-}
 
   if (loading) {
     return <p>loading...</p>;

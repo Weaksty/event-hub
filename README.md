@@ -41,6 +41,15 @@
 npm install
 npm run dev
 ---
+```
+Добавление Евентов
+1. Получить евенты от ticketmaster API
+2. Вставить результат в SupaBase
+```bash
+npm run import:ticketmaster
+npm run import:ticketmaster -- --commit
+---
+```
 
 ## Тестирование
 
