@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './Main.css'
 import Example from "./DatePicker";
 import ExampleTo from "./DataPickerTo";
@@ -10,7 +10,13 @@ import { FaListUl } from "react-icons/fa6";
 
 
 function Main() {
-    const [view, setView] = useState("grid");
+    const [view, setView] = useState(() => {
+        if (typeof window !== "undefined" && window.innerWidth < 1000) {
+            return "list"
+        }
+
+        return "grid"
+    });
     const [sortBy, setSortBy] = useState("")
     const [regeonFilter, setRegeonFilter] = useState([])
     const [dateTo, setDateTo] = useState(null)
@@ -21,14 +27,6 @@ function Main() {
     const [toggleD, setToggleDates] = useState(false);
     const [toggleA, setToggleAttendance] = useState(false);
     const [toggleE, setToggleEvents] = useState(false);
-
-
-    useEffect(() => {
-        if (window.innerWidth < 1000) {
-            setView("list")
-        }
-    })
-
 
     function regeonFilterFunction(e) {
         const value = e.target.value

@@ -46,13 +46,14 @@ npm run dev
 1. Получить евенты от ticketmaster API
 2. Вставить результат в SupaBase
 ```bash
-npm run import:ticketmaster
-npm run import:ticketmaster -- --commit
+npm run import:ticketmaster -- --size=10
+npm run import:ticketmaster -- --size=10 --commit
 ---
 ```
 
 ## Тестирование
 
 В процессе разработки были протестированы:
+все возможные баги
 
 * 

@@ -3,6 +3,8 @@ import { publicSupabase } from "./supabaseClient";
 import Article from "./Article";
 import "./Article.css";
 
+const PAGE_SIZE = 12;
+
 const attendanceRanges = {
   "500-": { min: 0, max: 499 },
   "500-999": { min: 500, max: 999 },
@@ -16,16 +18,113 @@ const attendanceRanges = {
   "100000+": { min: 100000, max: Infinity },
 };
 
+function applyFilters(query, filters) {
+  let nextQuery = query;
+
+  if (filters?.category?.length > 0) {
+    nextQuery = nextQuery.in("category", filters.category);
+  }
+
+  if (filters?.region?.length > 0) {
+    nextQuery = nextQuery.in("region", filters.region);
+  }
+
+  if (filters?.date) {
+    nextQuery = nextQuery.gte("event_date", filters.date);
+  }
+
+  if (filters?.dateTo) {
+    nextQuery = nextQuery.lte("event_date", filters.dateTo);
+  }
+
+  if (filters?.attendance?.length > 0) {
+    const ranges = filters.attendance
+      .map((rangeKey) => attendanceRanges[rangeKey])
+      .filter(Boolean)
+      .map((range) => {
+        if (range.max === Infinity) {
+          return `taken_places.gte.${range.min}`;
+        }
+
+        return `and(taken_places.gte.${range.min},taken_places.lte.${range.max})`;
+      });
+
+    if (ranges.length > 0) {
+      nextQuery = nextQuery.or(ranges.join(","));
+    }
+  }
+
+  return nextQuery;
+}
+
+function applySort(query, sortBy) {
+  switch (sortBy) {
+    case "three":
+      return query.order("deadline", { ascending: false });
+    case "four":
+      return query.order("title", { ascending: true });
+    case "five":
+      return query.order("title", { ascending: false });
+    case "six":
+      return query.order("taken_places", { ascending: true });
+    case "seven":
+      return query.order("taken_places", { ascending: false });
+    case "eight":
+      return query.order("price", { ascending: false });
+    case "nine":
+      return query.order("price", { ascending: true });
+    case "ten":
+      return query.order("event_date", { ascending: false });
+    case "DeadlineSoonestFirst":
+    default:
+      return query.order("deadline", { ascending: true });
+  }
+}
+
+function getVisiblePages(currentPage, totalPages) {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages = [1];
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+
+  if (start > 2) {
+    pages.push("start-ellipsis");
+  }
+
+  for (let pageNumber = start; pageNumber <= end; pageNumber += 1) {
+    pages.push(pageNumber);
+  }
+
+  if (end < totalPages - 1) {
+    pages.push("end-ellipsis");
+  }
+
+  pages.push(totalPages);
+  return pages;
+}
+
 export default function GetEventsList({ filters, view }) {
-  const [allEvents, setAllEvents] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [pageState, setPageState] = useState({ filterKey: "", page: 1 });
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
+  const filterKey = useMemo(() => JSON.stringify(filters ?? {}), [filters]);
+  const page = pageState.filterKey === filterKey ? pageState.page : 1;
+  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+  const visiblePages = getVisiblePages(page, totalPages);
 
   useEffect(() => {
     async function getSupaBaseList() {
       setLoading(true);
+      const today = new Date().toISOString().slice(0, 10);
+      const from = (page - 1) * PAGE_SIZE;
+      const to = from + PAGE_SIZE - 1;
 
-      const { data, error } = await publicSupabase
+      let eventsQuery = publicSupabase
         .from("events_list")
         .select(
           `
@@ -36,76 +135,41 @@ export default function GetEventsList({ filters, view }) {
             )
           `
         )
-        .limit(21);
+        .gte("deadline", today);
 
-      if (error) {
-        console.error("Events load error:", error);
-        setLoadError(error.message);
-        setAllEvents([]);
+      let countQuery = publicSupabase
+        .from("events_list")
+        .select("id", { count: "exact", head: true })
+        .gte("deadline", today);
+
+      eventsQuery = applyFilters(eventsQuery, filters);
+      eventsQuery = applySort(eventsQuery, filters?.sortBy);
+      eventsQuery = eventsQuery.range(from, to);
+
+      countQuery = applyFilters(countQuery, filters);
+
+      const [eventsResult, countResult] = await Promise.all([eventsQuery, countQuery]);
+      const { data, error } = eventsResult;
+      const { count, error: countError } = countResult;
+
+      if (error || countError) {
+        const message = error?.message ?? countError.message;
+        console.error("Events load error:", error ?? countError);
+        setLoadError(message);
+        setEvents([]);
+        setTotalCount(0);
         setLoading(false);
         return;
       }
 
       setLoadError("");
-      setAllEvents(data ?? []);
-      setAllEvents((result) => result.sort((a, b) => a.deadline.localeCompare(b.deadline)));
+      setEvents(data ?? []);
+      setTotalCount(count ?? 0);
       setLoading(false);
     }
 
     getSupaBaseList();
-  }, []);
-
-  const filteredEvents = useMemo(() => {
-    const result = allEvents.filter((event) => {
-      if (filters?.category?.length > 0 && !filters.category.includes(event.category)) {
-        return false;
-      }
-
-      if (filters?.region?.length > 0 && !filters.region.includes(event.region)) {
-        return false;
-      }
-
-      if (filters?.attendance?.length > 0) {
-        const match = filters.attendance.some((rangeKey) => {
-          const range = attendanceRanges[rangeKey];
-          return event.taken_places >= range.min && event.taken_places <= range.max;
-        });
-
-        if (!match) return false;
-      }
-
-      if (filters?.date && event.event_date < filters.date) {
-        return false;
-      }
-
-      if (filters?.dateTo && event.event_date > filters.dateTo) {
-        return false;
-      }
-
-      return true;
-    });
-
-    switch (filters.sortBy) {
-      case "DeadlineSoonestFirst":
-        return result.sort((a, b) => a.deadline.localeCompare(b.deadline));
-      case "three":
-        return result.sort((a, b) => b.deadline.localeCompare(a.deadline));
-      case "four":
-        return result.sort((a, b) => a.title.localeCompare(b.title));
-      case "five":
-        return result.sort((a, b) => b.title.localeCompare(a.title));
-      case "six":
-        return result.sort((a, b) => a.taken_places - b.taken_places);
-      case "seven":
-        return result.sort((a, b) => b.taken_places - a.taken_places);
-      case "eight":
-        return result.sort((a, b) => b.price - a.price);
-      case "nine":
-        return result.sort((a, b) => a.price - b.price);
-      default:
-        return result;
-    }
-  }, [allEvents, filters]);
+  }, [filterKey, filters, page]);
 
   function formatDate(value) {
     if (!value) return "Date TBD";
@@ -163,7 +227,7 @@ export default function GetEventsList({ filters, view }) {
     return <p>Could not load events: {loadError}</p>;
   }
 
-  if (filteredEvents.length === 0) {
+  if (events.length === 0) {
     const hasActiveFilters =
       filters?.category?.length ||
       filters?.region?.length ||
@@ -183,7 +247,7 @@ export default function GetEventsList({ filters, view }) {
 
   return (
     <>
-      {filteredEvents.map((event) => (
+      {events.map((event) => (
         <Article
           key={event.id}
           image={getEventImage(event)}
@@ -196,6 +260,58 @@ export default function GetEventsList({ filters, view }) {
           view={view}
         />
       ))}
+
+      {totalPages > 1 && (
+        <nav className="pagination" aria-label="Events pages">
+          <button
+            type="button"
+            className="pagination-button"
+            disabled={page === 1 || loading}
+            onClick={() =>
+              setPageState({
+                filterKey,
+                page: Math.max(1, page - 1),
+              })
+            }
+          >
+            Previous
+          </button>
+
+          <div className="pagination-pages">
+            {visiblePages.map((pageItem) =>
+              typeof pageItem === "number" ? (
+                <button
+                  type="button"
+                  key={pageItem}
+                  className={pageItem === page ? "pagination-page active" : "pagination-page"}
+                  disabled={loading}
+                  onClick={() => setPageState({ filterKey, page: pageItem })}
+                >
+                  {pageItem}
+                </button>
+              ) : (
+                <span className="pagination-ellipsis" key={pageItem}>
+                  ...
+                </span>
+              )
+            )}
+          </div>
+
+          <button
+            type="button"
+            className="pagination-button"
+            disabled={page === totalPages || loading}
+            onClick={() =>
+              setPageState({
+                filterKey,
+                page: Math.min(totalPages, page + 1),
+              })
+            }
+          >
+            Next
+          </button>
+        </nav>
+      )}
     </>
   );
 }
