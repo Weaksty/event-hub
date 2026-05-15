@@ -80,7 +80,7 @@ export default function Register() {
     <AuthLayout
       mode="register"
       title="Create account"
-      subtitle="Build your profile and prepare the frontend flow for your registration backend."
+      subtitle="Sign up to start browsing events."
       submitLabel={isSubmitting ? "Creating Account..." : "Create Account"}
       altLabel="Already have an account?"
       altLink="/login"

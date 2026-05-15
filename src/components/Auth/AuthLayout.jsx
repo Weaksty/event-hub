@@ -51,34 +51,23 @@ const isRegister = mode === "register";
             </Link>
 
             <p className="auth-mini-note">
-              Discover premium-looking event flows, smoother browsing, and a UI
-              layer that already feels ready for your backend.
+              Browse events in Poland.
             </p>
           </div>
 
           <div className="auth-hero-panels">
-            <div className="auth-stat-card">
-              <div className="auth-stat-icon">
-                <HiOutlineCalendarDays />
-              </div>
-              <div>
-                <strong>24k+</strong>
-                <span>Fresh events tracked every month</span>
-              </div>
-            </div>
-
             <div className="auth-feature-list">
               <div className="auth-feature-item">
                 <HiOutlineTicket />
-                Personalized event flow
+                Browse events by category
               </div>
               <div className="auth-feature-item">
                 <HiOutlineSparkles />
-                Clean premium dashboard feel
+                View event details
               </div>
               <div className="auth-feature-item">
                 <HiOutlineArrowLongRight />
-                Ready for your backend hookup
+                Simple and responsive
               </div>
             </div>
           </div>

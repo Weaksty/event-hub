@@ -70,7 +70,7 @@ export default function Header() {
         </nav>
         {user ? (
           <div className="bth">
-            <Link to="/profile" className="bth bthProf">
+            <Link to="/profile" className="bth bthReg">
               Profile
             </Link>
 

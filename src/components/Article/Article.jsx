@@ -20,6 +20,7 @@ export default function Article({
   taken_places,
   city,
   view = "list",
+  url,
 }) {
   return (
     <article className="article event-card">
@@ -56,11 +57,11 @@ export default function Article({
       </div>
 
       {view === "list" ? (
-        <button className="article-button article-button-arrow" aria-label={`Open ${title}`}>
+        <a href={url} target="_blank" rel="noreferrer" className="article-button article-button-arrow" aria-label={`Open ${title}`}>
           <HiOutlineArrowRight />
-        </button>
+        </a>
       ) : (
-        <button className="article-button article-button-more">More</button>
+        <a href={url} target="_blank" rel="noreferrer"><button className="article-button article-button-more">More</button></a>
       )}
     </article>
   );

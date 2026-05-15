@@ -5,74 +5,69 @@ import {
   HiOutlineCalendarDays,
   HiOutlineChartBarSquare,
   HiOutlineDocumentDuplicate,
-  HiOutlineMap,
-  HiOutlineMegaphone,
   HiOutlineSparkles,
   HiOutlineTicket,
-  HiOutlineUserGroup,
 } from "react-icons/hi2";
 import "./Welcome.css";
 
 const stats = [
-  { value: "24k+", label: "event launches and updates tracked each month" },
-  { value: "80%", label: "less admin time when workflows are centralized" },
-  { value: "110k+", label: "buyers, vendors, and partners in the wider ecosystem" },
+  { value: "Poland", label: "events from cities across the country" },
+  { value: "Categories", label: "music, sport, culture, and more" },
+  { value: "Responsive", label: "built for phone and desktop browsing" },
 ];
 
 const featureSections = [
   {
-    eyebrow: "Modern Ticketing",
-    title: "Sell faster with a cleaner mobile-first buying flow.",
+    eyebrow: "Browse events",
+    title: "Find local events in one simple feed.",
     text:
-      "Create rich landing pages, keep checkout in a single focused view, promote events with built-in marketing modules, and support scanning, box office activity, and live stats without switching between five different tools.",
-    cta: "Explore ticketing",
+      "See upcoming concerts, meetups, and activities from across Poland. The list is easy to scan and helps you compare dates, cities, and venues quickly.",
+    cta: "View events",
     image:
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1400&q=80",
-    icon: HiOutlineTicket,
+      "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1400&q=80",
+    icon: HiOutlineCalendarDays,
     reverse: false,
   },
   {
-    eyebrow: "Operations",
-    title: "Replace scattered admin with one calmer command center.",
+    eyebrow: "Categories",
+    title: "Filter events by type and interest.",
     text:
-      "Bring applications, sponsorship requests, participant review, payments, agreements, and approval steps into one streamlined workflow so your team can move quickly without chasing forms across inboxes and spreadsheets.",
-    cta: "See workflow tools",
+      "Switch between categories like music, sport, culture, and family-friendly events to find what fits your plans.",
+    cta: "Choose category",
     image:
       "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=80",
-    icon: HiOutlineUserGroup,
+    icon: HiOutlineTicket,
     reverse: true,
   },
   {
-    eyebrow: "Interactive Mapping",
-    title: "Turn layouts into an event guide people actually use.",
+    eyebrow: "Event details",
+    title: "Open an event to read the full info.",
     text:
-      "Build editable maps, assign booths or activations visually, and feed that structure into a mobile-friendly guide with schedules, directories, sponsors, FAQs, and engagement analytics that help you see what attracts attention.",
-    cta: "Learn about maps",
+      "Each event page shows the date, venue, and a short description so you can see the essentials in one place.",
+    cta: "Open details",
     image:
       "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80",
-    icon: HiOutlineMap,
+    icon: HiOutlineDocumentDuplicate,
     reverse: false,
   },
   {
-    eyebrow: "Marketplace",
-    title: "Make your opportunities easier to discover.",
+    eyebrow: "Responsive UI",
+    title: "A clean layout for both mobile and desktop.",
     text:
-      "Showcase sponsorship packages, booth inventory, and participation openings in a more visible way so brands and buyers can find the right event faster and reach out with better context from the start.",
-    cta: "Browse marketplace",
+      "The interface is designed for casual browsing, with a simple structure that works well on phones and laptops.",
+    cta: "Try it now",
     image:
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80",
-    icon: HiOutlineMegaphone,
+    icon: HiOutlineSparkles,
     reverse: true,
   },
 ];
 
 const extraFeatures = [
-  "Flexible applications for vendors, sponsors, performers, and parade participants",
-  "Revenue dashboard with filters, exports, and clearer event-level reporting",
-  "Live floor planning tools for booth inventory and placement management",
-  "Digital content packs and sponsor asset delivery in one branded hub",
-  "Document review with approvals, revisions, read receipts, and eSign support",
-  "Sharper attendee experience with schedules, directories, and mobile-friendly guides",
+  "User accounts for saved events",
+  "Better search by city and date",
+  "More sources beyond Ticketmaster",
+  "Map view for local event browsing",
 ];
 
 export default function Welcome() {
@@ -85,30 +80,27 @@ export default function Welcome() {
         <div className="welcome-copy">
           <span className="welcome-badge">
             <HiOutlineSparkles />
-            Streamlined event operations
+            Event discovery for Poland
           </span>
 
           <h1>
-            One polished platform
+            Find events across Poland
             <br />
-            for ticketing, planning,
-            <br />
-            mapping, and growth.
+            from music to local meetups.
           </h1>
 
           <p className="welcome-lead">
-            Event Hub helps teams run events with less chaos and stronger presentation.
-            Bring ticket sales, participant management, maps, sponsor visibility, and
-            event content into one modern workflow that feels clear from day one.
+            Event Hub is a student project for browsing events, filtering by category,
+            and reading event details without extra clutter.
           </p>
 
           <div className="welcome-actions">
-            <Link to="/register" className="welcome-primary">
-              Start Free Demo
+            <Link to="/events" className="welcome-primary">
+              Browse events
               <HiOutlineArrowLongRight />
             </Link>
             <Link to="/events" className="welcome-secondary">
-              Browse Platform Preview
+              Explore the app
             </Link>
           </div>
 
@@ -125,43 +117,43 @@ export default function Welcome() {
         <div className="welcome-visual">
           <div className="welcome-stage">
             <div className="welcome-stage-header">
-              <span className="welcome-stage-label">Platform Snapshot</span>
+              <span className="welcome-stage-label">App preview</span>
               <div className="welcome-stage-pills">
-                <span>Ticketing</span>
-                <span>Operations</span>
-                <span>Guides</span>
+                <span>Events</span>
+                <span>Filters</span>
+                <span>Details</span>
               </div>
             </div>
 
             <div className="welcome-stage-hero">
               <img
                 src="https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1400&q=80"
-                alt="Crowd enjoying a well-organized event"
+                alt="People browsing events online"
               />
               <div className="welcome-stage-overlay">
                 <div className="welcome-stage-feature">
                   <HiOutlineCalendarDays />
-                  Timed entry and scheduled programming
+                  Browse by date and city
                 </div>
                 <div className="welcome-stage-feature">
                   <HiOutlineChartBarSquare />
-                  Real-time numbers and cleaner reporting
+                  Simple event details view
                 </div>
               </div>
             </div>
 
             <div className="welcome-stage-grid">
               <article className="welcome-panel">
-                <h3>Fast purchase path</h3>
-                <p>Shorter checkout flow, richer landing pages, and mobile-first ticket scanning.</p>
+                <h3>Browse local events</h3>
+                <p>Explore listings from Polish cities with a clean event card layout.</p>
               </article>
               <article className="welcome-panel">
-                <h3>Centralized admin</h3>
-                <p>Applications, documents, payments, approvals, and sponsor tasks stay in one place.</p>
+                <h3>Filter by interest</h3>
+                <p>Choose the type of event you want without getting lost in extra menus.</p>
               </article>
               <article className="welcome-panel">
-                <h3>Interactive guides</h3>
-                <p>Maps, schedules, vendor listings, and sponsor modules built for attendees on the move.</p>
+                <h3>Read event details</h3>
+                <p>Open any event to see the venue, date, and a short description.</p>
               </article>
             </div>
           </div>
@@ -185,7 +177,7 @@ export default function Welcome() {
               </div>
               <h2>{title}</h2>
               <p>{text}</p>
-              <Link to="/register" className="welcome-inline-link">
+              <Link to="/events" className="welcome-inline-link">
                 {cta}
                 <HiOutlineArrowLongRight />
               </Link>
@@ -196,19 +188,19 @@ export default function Welcome() {
 
       <section className="welcome-bottom">
         <div className="welcome-bottom-copy">
-          <span className="welcome-bottom-eyebrow">More built in</span>
-          <h2>More value in the stack, not more tabs in your browser.</h2>
+          <span className="welcome-bottom-eyebrow">How it works</span>
+          <h2>Events are collected and shown in one interface.</h2>
           <p>
-            Event Hub was shaped around real producer workflows. That means the
-            product focuses on reducing back-and-forth, making event data easier to
-            manage, and giving every public-facing touchpoint a cleaner, more modern feel.
+            The app fetches event data from external sources and displays it in a
+            simple event discovery layout. It uses React, Supabase, Ticketmaster API,
+            and is meant to be a practical student project for exploring events in Poland.
           </p>
         </div>
 
         <div className="welcome-bottom-card">
           <div className="welcome-bottom-header">
             <HiOutlineDocumentDuplicate />
-            Additional capabilities
+            Technologies and next steps
           </div>
 
           <div className="welcome-extra-list">
@@ -220,8 +212,8 @@ export default function Welcome() {
             ))}
           </div>
 
-          <Link to="/register" className="welcome-primary welcome-bottom-cta">
-            Request a Demo
+          <Link to="/events" className="welcome-primary welcome-bottom-cta">
+            Browse events
             <HiOutlineArrowLongRight />
           </Link>
         </div>

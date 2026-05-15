@@ -3,7 +3,7 @@ import { publicSupabase } from "./supabaseClient";
 import Article from "./Article";
 import "./Article.css";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 21;
 
 const attendanceRanges = {
   "500-": { min: 0, max: 499 },
@@ -203,6 +203,7 @@ export default function GetEventsList({ filters, view }) {
     return value > 0 ? `${formatted}+` : formatted;
   }
 
+  console.log(events);
   function getEventImage(event) {
     if (event.image_url) {
       return event.image_url;
@@ -258,6 +259,7 @@ export default function GetEventsList({ filters, view }) {
           taken_places={formatAttendance(event.taken_places)}
           city={event.city}
           view={view}
+          url={event.event_url}
         />
       ))}
 

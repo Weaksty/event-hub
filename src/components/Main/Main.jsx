@@ -15,7 +15,7 @@ function Main() {
             return "list"
         }
 
-        return "grid"
+        return "list"
     });
     const [sortBy, setSortBy] = useState("")
     const [regeonFilter, setRegeonFilter] = useState([])

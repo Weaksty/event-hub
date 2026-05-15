@@ -27,7 +27,7 @@ export default function Login() {
     <AuthLayout
       mode="login"
       title="Welcome back"
-      subtitle="Log in to continue browsing events, tracking favorites, and managing your account."
+      subtitle="Log in to continue browsing events."
       submitLabel="Log In"
       altLabel="Don't have an account?"
       altLink="/register"
